@@ -23,32 +23,11 @@ async function run() {
     try {
         await client.connect();
         const database = client.db('HeroRider');
-        const learnerCollection = client.db("HeroRider").collection("learner");
-        const riderCollection = client.db("HeroRider").collection("rider");
-       
-
-
-        
-
-      
-
- 
-    
-
-        // app.get('/users/:email', async (req, res) => {
-        //     const email = req.params.email;
-        //     const query = { email: email };
-        //     const user = await usersCollection.findOne(query);
-        //     let isAdmin = false;
-        //     if (user?.role === 'admin') {
-        //         isAdmin = true;
-        //     }
-        //     res.json({ admin: isAdmin });
-        // })
-
+        const learnerCollection = database.collection("learner");
+        const riderCollection = database .collection("rider");
         app.post('/users', async (req, res) => {
             const user = req.body;
-            if(user?.license=="null"){
+            if(user?.model=="null"){
               const result = await learnerCollection.insertOne(user);
             }
             else{
@@ -60,35 +39,7 @@ async function run() {
         });
 
         
-        // app.put('/users/admin', verifyToken, async (req, res) => {
-        //     const user = req.body;
-        //     const requester = req.decodedEmail;
-        //     if (requester) {
-        //         const requesterAccount = await usersCollection.findOne({ email: requester });
-        //         if (requesterAccount.role === 'admin') {
-        //             const filter = { email: user.email };
-        //             const updateDoc = { $set: { role: 'admin' } };
-        //             const result = await usersCollection.updateOne(filter, updateDoc);
-        //             res.json(result);
-        //         }
-        //     }
-        //     else {
-        //         res.status(403).json({ message: 'you do not have access to make admin' })
-        //     }
-
-        // })
-
-        // app.post('/create-payment-intent', async (req, res) => {
-        //     const paymentInfo = req.body;
-        //     const amount = paymentInfo.price * 100;
-        //     const paymentIntent = await stripe.paymentIntents.create({
-        //         currency: 'usd',
-        //         amount: amount,
-        //         payment_method_types: ['card']
-        //     });
-        //     res.json({ clientSecret: paymentIntent.client_secret })
-        // })
-
+       
     }
     finally {
         // await client.close();
